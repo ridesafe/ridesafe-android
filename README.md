@@ -46,7 +46,7 @@ repositories {
 Then add the Android RideSafe lib dependency
 ```
 dependencies {
-    compile 'com.github.ridesafe:ridesafe-android:{commit version / TAG}'
+    compile 'com.github.ridesafe:ridesafe-android:0.1'
 }
 ```
 
