@@ -45,7 +45,7 @@ class ActivityRecordService : Service(), SensorEventListener, ActivityObservable
     private var accelerometer: Sensor? = null
 
     inner class LocalBinder : Binder() {
-        val service: io.ridesafe.android.ActivityRecordService
+        val service: ActivityRecordService
             get() = this@ActivityRecordService
     }
 
