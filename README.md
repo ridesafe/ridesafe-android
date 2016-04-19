@@ -67,6 +67,12 @@ RideSafe rs = RideSafe.Builder()
 # start recording rider activity
 rs.startRecordingActivity()
 
+# Push activity report
+rsb.getAccelerationForm().post(af)
+    .subscribeOn(Schedulers.newThread())
+    .observeOn(AndroidSchedulers.mainThread()
+    .subscribe()
+
 # stop recording rider activity
 rs.stopRecordingActivity
 
