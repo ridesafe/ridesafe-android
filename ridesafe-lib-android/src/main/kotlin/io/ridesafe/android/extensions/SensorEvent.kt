@@ -17,16 +17,13 @@
  * under the License.
  */
 
-package io.android;
+package io.ridesafe.android.extensions
 
-import android.app.Application;
-import android.test.ApplicationTestCase;
+import android.hardware.SensorEvent
+import io.ridesafe.android.models.Acceleration
+import java.util.*
 
 /**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
+ * Created by evoxmusic on 11/04/16.
  */
-public class ApplicationTest extends ApplicationTestCase<Application> {
-    public ApplicationTest() {
-        super(Application.class);
-    }
-}
+fun SensorEvent.getAcceleration() = Acceleration(Date().getLocalDate().time, values[0], values[1], values[2])

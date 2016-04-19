@@ -17,16 +17,19 @@
  * under the License.
  */
 
-package io.android;
+package io.ridesafe.android.rest.models
 
-import android.app.Application;
-import android.test.ApplicationTestCase;
+import io.android.backend.models.AccelerationForm
+import retrofit2.http.Body
+import retrofit2.http.POST
+import rx.Observable
 
 /**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
+ * Created by evoxmusic on 17/04/16.
  */
-public class ApplicationTest extends ApplicationTestCase<Application> {
-    public ApplicationTest() {
-        super(Application.class);
-    }
+interface RestAccelerationForm {
+
+    @POST("acceleration/form")
+    fun post(@Body accelerationForm: AccelerationForm): Observable<Any>
+
 }

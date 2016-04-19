@@ -17,16 +17,19 @@
  * under the License.
  */
 
-package io.android;
+package io.android.backend.models
 
-import android.app.Application;
-import android.test.ApplicationTestCase;
+import io.ridesafe.android.models.BikeType
+import io.ridesafe.android.models.RoadCondition
+import io.ridesafe.android.models.RoadType
 
 /**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
+ * Created by evoxmusic on 17/04/16.
  */
-public class ApplicationTest extends ApplicationTestCase<Application> {
-    public ApplicationTest() {
-        super(Application.class);
-    }
-}
+data class AccelerationForm(
+        var activityType: ActivityType?,
+        var startTimestamp: Long,
+        var endTimestamp: Long,
+        var bikeType: BikeType?,
+        var roadType: RoadType?,
+        var roadCondition: RoadCondition?)

@@ -17,16 +17,22 @@
  * under the License.
  */
 
-package io.android;
+package io.ridesafe.android.services
 
-import android.app.Application;
-import android.test.ApplicationTestCase;
+import io.ridesafe.android.models.Acceleration
+import java.util.*
 
 /**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
+ * Created by evoxmusic on 11/04/16.
  */
-public class ApplicationTest extends ApplicationTestCase<Application> {
-    public ApplicationTest() {
-        super(Application.class);
-    }
+interface ActivityObservable {
+
+    fun getObservers(): HashSet<ActivityObserver>
+
+    fun addObserver(activityObserver: ActivityObserver) = getObservers().add(activityObserver)
+
+    fun removeObserver(activityObserver: ActivityObserver) = getObservers().remove(activityObserver)
+
+    fun notifyObservers(acceleration: Acceleration?) = getObservers().forEach { e -> acceleration?.let { e.onAcceleration(it) } }
+
 }

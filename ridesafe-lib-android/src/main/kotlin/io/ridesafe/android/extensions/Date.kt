@@ -17,16 +17,15 @@
  * under the License.
  */
 
-package io.android;
+package io.ridesafe.android.extensions
 
-import android.app.Application;
-import android.test.ApplicationTestCase;
+import java.util.*
 
 /**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
+ * Created by evoxmusic on 18/04/16.
  */
-public class ApplicationTest extends ApplicationTestCase<Application> {
-    public ApplicationTest() {
-        super(Application.class);
-    }
+fun Date.getLocalDate(): Date {
+    // add offset
+    val offset = TimeZone.getDefault().getOffset(Date().time)
+    return Date(this.time + offset)
 }

@@ -17,16 +17,11 @@
  * under the License.
  */
 
-package io.android;
+package io.ridesafe.android.extensions
 
-import android.app.Application;
-import android.test.ApplicationTestCase;
+import io.ridesafe.android.models.Acceleration
 
 /**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
+ * Created by evoxmusic on 12/04/16.
  */
-public class ApplicationTest extends ApplicationTestCase<Application> {
-    public ApplicationTest() {
-        super(Application.class);
-    }
-}
+fun List<Array<Number>>?.toAccelerations() = this?.map { Acceleration.factory(it) }
