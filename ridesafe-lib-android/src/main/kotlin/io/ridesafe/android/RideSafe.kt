@@ -24,7 +24,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
-import android.provider.Settings
 import android.util.Log
 import io.ridesafe.android.extensions.subscribeAsyncBackground
 import io.ridesafe.android.extensions.toAccelerations
@@ -73,7 +72,6 @@ class RideSafe(builder: RideSafeBuilderImpl) : RideSafeBuilderImpl by builder {
         }
 
         fun setBackend(backend: RideSafeBackend?): Builder {
-            backend?.deviceId = Settings.Secure.getString(getContext()?.contentResolver, Settings.Secure.ANDROID_ID)
             this.backend = backend
             return this
         }

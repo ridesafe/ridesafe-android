@@ -19,6 +19,8 @@
 
 package io.ridesafe.android.rest
 
+import android.content.Context
+import android.provider.Settings
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import io.ridesafe.android.rest.models.RestAcceleration
@@ -34,12 +36,12 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by evoxmusic on 10/04/16.
  */
-class RideSafeBackend constructor(val host: String,
+class RideSafeBackend constructor(val context: Context,
+                                  val host: String,
                                   val authenticationToken: String? = null,
                                   val timeout: Long = 60 * 1000L) {
 
-    var deviceId: String? = null
-
+    private val deviceId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
     private var ra: Retrofit? = null
 
     val acceleration: RestAcceleration by lazy { ra?.create(RestAcceleration::class.java)!! }
@@ -64,7 +66,7 @@ class RideSafeBackend constructor(val host: String,
 
                     val builder = chain.request().newBuilder().addHeader("Device", "android")
 
-                    deviceId?.let { builder.addHeader("Device-Id", it) }
+                    builder.addHeader("Device-Id", deviceId)
                     authenticationToken?.let { builder.addHeader("Authorization", it) }
 
                     chain.proceed(builder.build())
