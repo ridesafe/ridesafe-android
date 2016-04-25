@@ -1,4 +1,4 @@
-<center><img src="https://raw.githubusercontent.com/ridesafe/project/gh-pages/ridesafe_256.jpg" ></center>
+<p align="center"><img src="https://raw.githubusercontent.com/ridesafe/project/gh-pages/ridesafe_256.jpg"></p>
 
 ## RideSafe
 [RideSafe](http://www.ridesafe.io) is an open source project which detects bikers' falls. This is possible thanks to intelligent algorithms and data collection.
@@ -53,7 +53,7 @@ dependencies {
 ## How to use
 
 It's straightforward:
-```Java
+```java
 RideSafeBackend rsb = new RideSafeBackend("https://api.ridesafe.io")
 
 RideSafe rs = RideSafe.Builder()
@@ -108,10 +108,12 @@ We are looking for worldwide partners specialised in motorbike and/or technology
 
 ## More
 The "Activity Recognition" project is based on the work of [Amira Lakhal](https://github.com/MiraLak), which detects one type of activity from the accelerometer integrated in smartphones and a self-learning algorithm called [machine learning](https://en.wikipedia.org/wiki/Machine_learning).
+
 The data and algorithms are available under the Apache license, this means that the changes and improvements made will be communicated to the community.
 Commercial use is unrestricted.
 
 ## Contact
 
 Contact us at [contact@ridesafe.io](mailto:contact@ridesafe.io) or [contact@nousmotards.com](mailto:contact@nousmotards.com)
+
 Follow us: [Twitter](https://twitter.com/Nousmotards) [Facebook](https://www.facebook.com/nousmotardsapp)
