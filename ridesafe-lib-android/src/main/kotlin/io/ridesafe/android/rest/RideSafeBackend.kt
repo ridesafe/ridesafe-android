@@ -64,6 +64,7 @@ class RideSafeBackend constructor(val host: String,
 
                     val builder = chain.request().newBuilder().addHeader("Device", "android")
 
+                    deviceId?.let { builder.addHeader("Device-Id", it) }
                     authenticationToken?.let { builder.addHeader("Authorization", it) }
 
                     chain.proceed(builder.build())
