@@ -49,6 +49,11 @@ class ActivityRecordService : Service(), SensorEventListener, ActivityObservable
             get() = this@ActivityRecordService
     }
 
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        // restart service with the last intent information
+        return START_REDELIVER_INTENT
+    }
+
     override fun onCreate() {
         super.onCreate()
 
