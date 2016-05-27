@@ -227,8 +227,11 @@ class RideSafe(builder: RideSafeBuilderImpl) : RideSafeBuilderImpl by builder, S
     fun stopRecordingActivity() {
         // stop accelerometer listening
         activityRecordService?.stopSensor()
-        // flush accelerations data
-        pushAccelerationsToBackend(mArrayAccelerations)
+
+        if (mArrayAccelerations.size > 0) {
+            // flush accelerations data
+            pushAccelerationsToBackend(mArrayAccelerations)
+        }
     }
 
 }
