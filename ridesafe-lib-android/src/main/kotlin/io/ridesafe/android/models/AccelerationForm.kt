@@ -22,6 +22,7 @@ package io.android.backend.models
 import io.ridesafe.android.models.BikeType
 import io.ridesafe.android.models.RoadCondition
 import io.ridesafe.android.models.RoadType
+import java.io.Serializable
 
 /**
  * Created by evoxmusic on 17/04/16.
@@ -32,4 +33,4 @@ data class AccelerationForm(
         var endTimestamp: Long,
         var bikeType: BikeType?,
         var roadType: RoadType?,
-        var roadCondition: RoadCondition?)
+        var roadCondition: RoadCondition?) : Serializable

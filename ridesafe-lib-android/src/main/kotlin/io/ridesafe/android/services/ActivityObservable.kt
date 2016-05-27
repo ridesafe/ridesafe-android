@@ -20,12 +20,13 @@
 package io.ridesafe.android.services
 
 import io.ridesafe.android.models.Acceleration
+import java.io.Serializable
 import java.util.*
 
 /**
  * Created by evoxmusic on 11/04/16.
  */
-interface ActivityObservable {
+interface ActivityObservable: Serializable {
 
     fun getObservers(): HashSet<ActivityObserver>
 

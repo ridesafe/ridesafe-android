@@ -23,11 +23,12 @@ import io.ridesafe.android.models.Acceleration
 import retrofit2.http.Body
 import retrofit2.http.POST
 import rx.Observable
+import java.io.Serializable
 
 /**
  * Created by evoxmusic on 10/04/16.
  */
-interface RestAcceleration {
+interface RestAcceleration : Serializable {
 
     @POST("acceleration")
     fun post(@Body acceleration: Acceleration): Observable<Acceleration>

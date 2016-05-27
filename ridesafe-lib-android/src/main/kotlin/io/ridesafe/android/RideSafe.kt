@@ -32,12 +32,13 @@ import io.ridesafe.android.rest.RideSafeBackend
 import io.ridesafe.android.services.ActivityObserver
 import io.ridesafe.android.services.ActivityRecordService
 import rx.Observable
+import java.io.Serializable
 import java.util.*
 
 /**
  * Created by evoxmusic on 11/04/16.
  */
-interface RideSafeBuilderImpl {
+interface RideSafeBuilderImpl : Serializable {
 
     fun getContext(): Context?
     fun getBackend(): RideSafeBackend?
@@ -47,7 +48,7 @@ interface RideSafeBuilderImpl {
 
 }
 
-class RideSafe(builder: RideSafeBuilderImpl) : RideSafeBuilderImpl by builder {
+class RideSafe(builder: RideSafeBuilderImpl) : RideSafeBuilderImpl by builder, Serializable {
 
     companion object {
         val TAG = "RideSafe"

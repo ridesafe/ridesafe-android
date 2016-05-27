@@ -28,6 +28,7 @@ import android.hardware.SensorManager
 import android.os.Binder
 import android.os.IBinder
 import io.ridesafe.android.extensions.getAcceleration
+import java.io.Serializable
 import java.util.*
 
 /**
@@ -36,7 +37,7 @@ import java.util.*
  * This service take care of getting gyroscope, accelerometer data,
  * storing them locally.
  */
-class ActivityRecordService : Service(), SensorEventListener, ActivityObservable {
+class ActivityRecordService : Service(), SensorEventListener, ActivityObservable, Serializable {
 
     private val observers = HashSet<ActivityObserver>()
     private val mBinder = LocalBinder()

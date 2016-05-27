@@ -19,10 +19,12 @@
 
 package io.ridesafe.android.models
 
+import java.io.Serializable
+
 /**
  * Created by evoxmusic on 10/04/16.
  */
-enum class RoadCondition {
+enum class RoadCondition : Serializable {
 
     GOOD,
     FAIR,

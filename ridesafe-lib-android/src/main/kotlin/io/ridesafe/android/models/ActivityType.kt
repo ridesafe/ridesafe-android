@@ -19,10 +19,12 @@
 
 package io.android.backend.models
 
+import java.io.Serializable
+
 /**
  * Created by evoxmusic on 14/04/16.
  */
-enum class ActivityType {
+enum class ActivityType : Serializable {
 
     MOTORBIKING,
     MOTORBIKE_FALLING,

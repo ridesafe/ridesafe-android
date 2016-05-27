@@ -31,6 +31,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.Serializable
 import java.util.concurrent.TimeUnit
 
 /**
@@ -39,7 +40,7 @@ import java.util.concurrent.TimeUnit
 class RideSafeBackend constructor(val context: Context,
                                   val host: String,
                                   val authenticationToken: String? = null,
-                                  val timeout: Long = 60 * 1000L) {
+                                  val timeout: Long = 60 * 1000L) : Serializable {
 
     private val deviceId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
     private var ra: Retrofit? = null

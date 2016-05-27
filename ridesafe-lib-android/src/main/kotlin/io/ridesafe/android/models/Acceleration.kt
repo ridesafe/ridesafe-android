@@ -19,6 +19,8 @@
 
 package io.ridesafe.android.models
 
+import java.io.Serializable
+
 /**
  * Created by evoxmusic on 10/04/16.
  *
@@ -27,7 +29,7 @@ package io.ridesafe.android.models
 data class Acceleration(val timestamp: Long,
                         val x: Float,
                         val y: Float,
-                        val z: Float) {
+                        val z: Float) : Serializable {
 
     fun toArray() = arrayOf<Number>(timestamp, x, y, z)
 
