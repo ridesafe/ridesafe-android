@@ -220,12 +220,15 @@ class RideSafe(builder: RideSafeBuilderImpl) : RideSafeBuilderImpl by builder, S
     }
 
     fun startRecordingActivity() {
+        // start accelerometer listening
         activityRecordService?.startSensor()
     }
 
     fun stopRecordingActivity() {
+        // stop accelerometer listening
         activityRecordService?.stopSensor()
-        mArrayAccelerations.clear()
+        // flush accelerations data
+        pushAccelerationsToBackend(mArrayAccelerations)
     }
 
 }
