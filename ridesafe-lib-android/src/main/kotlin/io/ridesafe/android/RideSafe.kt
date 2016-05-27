@@ -231,6 +231,7 @@ class RideSafe(builder: RideSafeBuilderImpl) : RideSafeBuilderImpl by builder, S
         if (mArrayAccelerations.size > 0) {
             // flush accelerations data
             pushAccelerationsToBackend(mArrayAccelerations)
+            mArrayAccelerations.clear()
         }
     }
 
