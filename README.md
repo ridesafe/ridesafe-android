@@ -107,7 +107,7 @@ Nousmotards app is available on Mobile ([Android](https://play.google.com/store/
 We are looking for worldwide partners specialised in motorbike and/or technology.
 
 ## More
-The "Activity Recognition" project is based on the work of [Amira Lakhal](https://github.com/MiraLak), which detects one type of activity from the accelerometer integrated in smartphones and a self-learning algorithm called [machine learning](https://en.wikipedia.org/wiki/Machine_learning).
+The "Activity Recognition" project is based on the work of [Ludwine Probst](https://github.com/nivdul) and [Amira Lakhal](https://github.com/MiraLak), which detects one type of activity from the accelerometer integrated in smartphones and a self-learning algorithm called [machine learning](https://en.wikipedia.org/wiki/Machine_learning).
 
 The data and algorithms are available under the Apache license, this means that the changes and improvements made will be communicated to the community.
 Commercial use is unrestricted.
