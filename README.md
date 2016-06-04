@@ -3,7 +3,7 @@
 ## RideSafe
 [RideSafe](http://www.ridesafe.io) is an open source project which detects bikers' falls. This is possible thanks to intelligent algorithms and data collection.
 
-Our smartphones have accelerometers to measure acceleration forces of individuals, these data can be used to analyse the behaviour: when walking, running, biking and even falling !
+Our smartphones have accelerometers to measure acceleration gyroscope forces of individuals, these data can be used to analyse the behaviour: when walking, running, biking and even falling !
 The self learning algorithms are able to improve the detection of a fall by analysing such data.
 
 Go to:
@@ -19,7 +19,7 @@ Go to:
 * [Contact](#contact)
 
 ## RideSafe Android lib
-The RideSafe lib is in charge of getting accelerometer data (timestamp, x², y², z²) from your smartphone and then ship them to the [RideSafe Backend](https://github.com/ridesafe/ridesafe-backend).
+The RideSafe lib is in charge of getting accelerometer and gyroscope data (timestamp, acc_x², acc_y², acc_z², gyr_x, gyr_y, gyr_z) from your smartphone and then ship them to the [RideSafe Backend](https://github.com/ridesafe/ridesafe-backend).
 
 ## How it works
 RideSafe needs accelerometer data to detect bikers' falls. Once the lib installed and configured on your app, this will listen for new accelerometer events, storing them in memory (very tiny footprint) before shipping them to the backend.
@@ -68,8 +68,8 @@ RideSafe rs = RideSafe.Builder()
 rs.startRecordingActivity()
 
 # Push activity report
-rsb.getAccelerationForm().post(af)
-    .subscribeOn(Schedulers.newThread())
+rsb.getDataForm().post(af)
+    .subscribeOn(Schedulers.io())
     .observeOn(AndroidSchedulers.mainThread()
     .subscribe()
 

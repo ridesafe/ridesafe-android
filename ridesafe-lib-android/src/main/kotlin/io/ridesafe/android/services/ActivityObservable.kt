@@ -19,14 +19,14 @@
 
 package io.ridesafe.android.services
 
-import io.ridesafe.android.models.Acceleration
+import io.ridesafe.android.models.SensorData
 import java.io.Serializable
 import java.util.*
 
 /**
  * Created by evoxmusic on 11/04/16.
  */
-interface ActivityObservable: Serializable {
+interface ActivityObservable : Serializable {
 
     fun getObservers(): HashSet<ActivityObserver>
 
@@ -34,6 +34,6 @@ interface ActivityObservable: Serializable {
 
     fun removeObserver(activityObserver: ActivityObserver) = getObservers().remove(activityObserver)
 
-    fun notifyObservers(acceleration: Acceleration?) = getObservers().forEach { e -> acceleration?.let { e.onAcceleration(it) } }
+    fun notifyObservers(sensorData: SensorData?) = getObservers().forEach { e -> sensorData?.let { e.onSensorData(it) } }
 
 }

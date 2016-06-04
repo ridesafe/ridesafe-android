@@ -17,22 +17,36 @@
  * under the License.
  */
 
-package io.ridesafe.android.rest.models
+package io.ridesafe.android.extensions
 
-import io.ridesafe.android.models.Acceleration
-import retrofit2.http.Body
-import retrofit2.http.POST
-import rx.Observable
+import io.ridesafe.android.models.AccelerometerSensorData
+import io.ridesafe.android.models.Data
+import io.ridesafe.android.models.GyroscopeSensorData
+import io.ridesafe.android.models.SensorData
 
 /**
- * Created by evoxmusic on 10/04/16.
+ * Created by evoxmusic on 04/06/16.
  */
-interface RestAcceleration {
+fun List<SensorData>.mergeToSingleData(): Data {
+    val data = Data(this[0].timestamp)
 
-    @POST("acceleration")
-    fun post(@Body acceleration: Acceleration): Observable<Acceleration>
+    this.map { v ->
+        when (v) {
+            is AccelerometerSensorData -> {
+                data.accX = v.x
+                data.accY = v.y
+                data.accZ = v.z
+                data
+            }
+            is GyroscopeSensorData -> {
+                data.gyrX = v.x
+                data.gyrY = v.y
+                data.gyrZ = v.z
+                data
+            }
+            else -> data
+        }
+    }
 
-    @POST("accelerations")
-    fun post(@Body accelerations: List<Acceleration>): Observable<Boolean>
-
+    return data
 }

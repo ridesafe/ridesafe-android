@@ -17,16 +17,17 @@
  * under the License.
  */
 
-package io.ridesafe.android.services
+package io.ridesafe.android.models
 
-import io.ridesafe.android.models.SensorData
 import java.io.Serializable
 
 /**
- * Created by evoxmusic on 11/04/16.
+ * Created by evoxmusic on 10/04/16.
  */
-interface ActivityObserver : Serializable {
-
-    fun onSensorData(sensorData: SensorData)
-
-}
+data class Data(var timestamp: Long? = null,
+                var accX: Float? = null,
+                var accY: Float? = null,
+                var accZ: Float? = null,
+                var gyrX: Float? = null,
+                var gyrY: Float? = null,
+                var gyrZ: Float? = null) : Serializable

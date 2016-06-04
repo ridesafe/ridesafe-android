@@ -23,8 +23,8 @@ import android.content.Context
 import android.provider.Settings
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
-import io.ridesafe.android.rest.models.RestAcceleration
-import io.ridesafe.android.rest.models.RestAccelerationForm
+import io.ridesafe.android.rest.models.RestData
+import io.ridesafe.android.rest.models.RestDataForm
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -45,8 +45,8 @@ class RideSafeBackend constructor(val context: Context,
     private val deviceId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
     private var ra: Retrofit? = null
 
-    val acceleration: RestAcceleration by lazy { ra?.create(RestAcceleration::class.java)!! }
-    val accelerationForm: RestAccelerationForm by lazy { ra?.create(RestAccelerationForm::class.java)!! }
+    val data: RestData by lazy { ra?.create(RestData::class.java)!! }
+    val dataForm: RestDataForm by lazy { ra?.create(RestDataForm::class.java)!! }
 
     init {
         val gson = GsonBuilder()

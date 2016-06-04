@@ -19,11 +19,20 @@
 
 package io.ridesafe.android.extensions
 
+import android.hardware.Sensor
 import android.hardware.SensorEvent
-import io.ridesafe.android.models.Acceleration
+import io.ridesafe.android.models.AccelerometerSensorData
+import io.ridesafe.android.models.GyroscopeSensorData
+import io.ridesafe.android.models.SensorData
 import java.util.*
 
 /**
  * Created by evoxmusic on 11/04/16.
  */
-fun SensorEvent.getAcceleration() = Acceleration(Date().getLocalDate().time, values[0], values[1], values[2])
+fun SensorEvent.getSensorData(): SensorData {
+    return when (sensor.type) {
+        Sensor.TYPE_ACCELEROMETER -> return AccelerometerSensorData(Date().getLocalDate().time, values[0], values[1], values[2])
+        else -> return GyroscopeSensorData(Date().getLocalDate().time, values[0], values[1], values[2])
+    }
+}
+

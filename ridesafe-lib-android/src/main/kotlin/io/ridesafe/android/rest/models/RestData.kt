@@ -17,20 +17,22 @@
  * under the License.
  */
 
-package io.android.backend.models
+package io.ridesafe.android.rest.models
 
-import io.ridesafe.android.models.BikeType
-import io.ridesafe.android.models.RoadCondition
-import io.ridesafe.android.models.RoadType
-import java.io.Serializable
+import io.ridesafe.android.models.Data
+import retrofit2.http.Body
+import retrofit2.http.POST
+import rx.Observable
 
 /**
- * Created by evoxmusic on 17/04/16.
+ * Created by evoxmusic on 10/04/16.
  */
-data class AccelerationForm(
-        var activityType: ActivityType?,
-        var startTimestamp: Long,
-        var endTimestamp: Long,
-        var bikeType: BikeType?,
-        var roadType: RoadType?,
-        var roadCondition: RoadCondition?) : Serializable
+interface RestData {
+
+    @POST("data")
+    fun post(@Body data: Data): Observable<Data>
+
+    @POST("datas")
+    fun post(@Body datas: List<Data>): Observable<Boolean>
+
+}

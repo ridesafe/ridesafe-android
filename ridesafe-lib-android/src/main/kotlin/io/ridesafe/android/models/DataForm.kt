@@ -17,11 +17,20 @@
  * under the License.
  */
 
-package io.ridesafe.android.extensions
+package io.android.backend.models
 
-import io.ridesafe.android.models.Acceleration
+import io.ridesafe.android.models.BikeType
+import io.ridesafe.android.models.RoadCondition
+import io.ridesafe.android.models.RoadType
+import java.io.Serializable
 
 /**
- * Created by evoxmusic on 12/04/16.
+ * Created by evoxmusic on 17/04/16.
  */
-fun List<Array<Number>>?.toAccelerations() = this?.map { Acceleration.factory(it) }
+data class DataForm(
+        var activityType: ActivityType?,
+        var startTimestamp: Long,
+        var endTimestamp: Long,
+        var bikeType: BikeType?,
+        var roadType: RoadType?,
+        var roadCondition: RoadCondition?) : Serializable

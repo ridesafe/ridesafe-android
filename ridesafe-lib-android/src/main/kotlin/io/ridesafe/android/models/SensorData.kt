@@ -17,19 +17,20 @@
  * under the License.
  */
 
-package io.ridesafe.android.rest.models
-
-import io.android.backend.models.AccelerationForm
-import retrofit2.http.Body
-import retrofit2.http.POST
-import rx.Observable
+package io.ridesafe.android.models
 
 /**
- * Created by evoxmusic on 17/04/16.
+ * Created by evoxmusic on 04/06/16.
  */
-interface RestAccelerationForm {
+interface SensorData {
 
-    @POST("acceleration/form")
-    fun post(@Body accelerationForm: AccelerationForm): Observable<Any>
+    val timestamp: Long
+    val x: Float
+    val y: Float
+    val z: Float
 
 }
+
+data class AccelerometerSensorData(override val timestamp: Long, override val x: Float, override val y: Float, override val z: Float) : SensorData
+
+data class GyroscopeSensorData(override val timestamp: Long, override val x: Float, override val y: Float, override val z: Float) : SensorData

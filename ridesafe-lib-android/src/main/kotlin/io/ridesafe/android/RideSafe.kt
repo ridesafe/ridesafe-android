@@ -25,9 +25,10 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import android.util.Log
+import io.ridesafe.android.extensions.mergeToSingleData
 import io.ridesafe.android.extensions.subscribeAsyncBackground
-import io.ridesafe.android.extensions.toAccelerations
-import io.ridesafe.android.models.Acceleration
+import io.ridesafe.android.models.Data
+import io.ridesafe.android.models.SensorData
 import io.ridesafe.android.rest.RideSafeBackend
 import io.ridesafe.android.services.ActivityObserver
 import io.ridesafe.android.services.ActivityRecordService
@@ -121,29 +122,34 @@ class RideSafe(builder: RideSafeBuilderImpl) : RideSafeBuilderImpl by builder, S
     }
 
     // TODO replace it by CircularBuffer
-    private val mArrayAccelerations: MutableList<Array<Number>> = mutableListOf()
-    private val pushAccelerationsToBackendObserver = object : ActivityObserver {
-        override fun onAcceleration(acceleration: Acceleration) {
-            mArrayAccelerations.add(acceleration.toArray())
+    private val mArraySensorDatas: MutableList<SensorData> = mutableListOf()
+    private val pushDatasToBackendObserver = object : ActivityObserver {
+        override fun onSensorData(sensorData: SensorData) {
+            mArraySensorDatas.add(sensorData)
 
-            if (mArrayAccelerations.size % getPushToBackendBatchSize() == 0) {
-                pushAccelerationsToBackend(mArrayAccelerations.toList())
-                mArrayAccelerations.clear()
+            if (mArraySensorDatas.size % getPushToBackendBatchSize() == 0) {
+                pushDatasToBackend(mArraySensorDatas.toList())
+                mArraySensorDatas.clear()
             }
         }
     }
 
-    private fun pushAccelerationsToBackend(arrayAccelerations: List<Array<Number>>?) {
-        Log.d(TAG, "push ${arrayAccelerations?.size ?: 0} accelerations to backend")
+    private fun pushDatasToBackend(sensorDatas: List<SensorData>?) {
+        Log.d(TAG, "push ${sensorDatas?.size ?: 0} datas to backend")
 
-        Observable.create<List<Acceleration>> { subscriber ->
-            arrayAccelerations?.toAccelerations()?.let { subscriber.onNext(it) }
+        Observable.create<List<Data>> { subscriber ->
+
+            val datas = sensorDatas
+                    ?.groupBy { it.timestamp }
+                    ?.map { it.value.mergeToSingleData() }
+
+            subscriber.onNext(datas)
             subscriber.onCompleted()
 
         }.subscribeAsyncBackground {
-            getBackend()?.acceleration?.post(it)?.subscribeAsyncBackground({ throwable ->
+            getBackend()?.data?.post(it)?.subscribeAsyncBackground({ throwable ->
                 throwable.printStackTrace()
-                arrayAccelerations?.let { mArrayAccelerations.addAll(it) }
+                sensorDatas?.let { mArraySensorDatas.addAll(it) }
             }) { result ->
 
             }
@@ -181,7 +187,7 @@ class RideSafe(builder: RideSafeBuilderImpl) : RideSafeBuilderImpl by builder, S
      * ready method is called when the RideSafeObject is ready to by used
      */
     private fun ready() {
-        getObservers()?.add(pushAccelerationsToBackendObserver)
+        getObservers()?.add(pushDatasToBackendObserver)
 
         // add observers
         getObservers()?.forEach { activityRecordService?.addObserver(it) }
@@ -220,18 +226,18 @@ class RideSafe(builder: RideSafeBuilderImpl) : RideSafeBuilderImpl by builder, S
     }
 
     fun startRecordingActivity() {
-        // start accelerometer listening
+        // start data listening
         activityRecordService?.startSensor()
     }
 
     fun stopRecordingActivity() {
-        // stop accelerometer listening
+        // stop data listening
         activityRecordService?.stopSensor()
 
-        if (mArrayAccelerations.size > 0) {
-            // flush accelerations data
-            pushAccelerationsToBackend(mArrayAccelerations)
-            mArrayAccelerations.clear()
+        if (mArraySensorDatas.size > 0) {
+            // flush datas
+            pushDatasToBackend(mArraySensorDatas)
+            mArraySensorDatas.clear()
         }
     }
 

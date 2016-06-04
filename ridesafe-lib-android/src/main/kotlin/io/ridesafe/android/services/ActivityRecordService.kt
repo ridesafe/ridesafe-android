@@ -27,7 +27,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Binder
 import android.os.IBinder
-import io.ridesafe.android.extensions.getAcceleration
+import io.ridesafe.android.extensions.getSensorData
 import java.io.Serializable
 import java.util.*
 
@@ -43,7 +43,8 @@ class ActivityRecordService : Service(), SensorEventListener, ActivityObservable
     private val mBinder = LocalBinder()
 
     private var sm: SensorManager? = null
-    private var accelerometer: Sensor? = null
+    private var accelerometerSensor: Sensor? = null
+    private var gyroscopeSensor: Sensor? = null
 
     inner class LocalBinder : Binder() {
         val service: ActivityRecordService
@@ -60,7 +61,8 @@ class ActivityRecordService : Service(), SensorEventListener, ActivityObservable
 
         // init accelerometer sensor
         sm = getSystemService(SENSOR_SERVICE) as SensorManager
-        accelerometer = sm?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        accelerometerSensor = sm?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER or Sensor.TYPE_GRAVITY)
+        gyroscopeSensor = sm?.getDefaultSensor(Sensor.TYPE_GYROSCOPE or Sensor.TYPE_GRAVITY)
     }
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -72,14 +74,17 @@ class ActivityRecordService : Service(), SensorEventListener, ActivityObservable
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
-        notifyObservers(event?.getAcceleration())
+        notifyObservers(event?.getSensorData())
     }
 
     override fun getObservers(): HashSet<ActivityObserver> {
         return observers
     }
 
-    fun startSensor() = sm?.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
+    fun startSensor() = {
+        sm?.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
+        sm?.registerListener(this, gyroscopeSensor, SensorManager.SENSOR_DELAY_NORMAL)
+    }
 
     fun stopSensor() = sm?.unregisterListener(this)
 
