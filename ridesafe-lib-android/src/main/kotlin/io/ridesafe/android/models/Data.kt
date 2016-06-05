@@ -24,10 +24,10 @@ import java.io.Serializable
 /**
  * Created by evoxmusic on 10/04/16.
  */
-data class Data(var timestamp: Long? = null,
-                var accX: Float? = null,
-                var accY: Float? = null,
-                var accZ: Float? = null,
-                var gyrX: Float? = null,
-                var gyrY: Float? = null,
-                var gyrZ: Float? = null) : Serializable
+data class Data(var timestamp: Long? = 0L,
+                var accX: Float? = 0f,
+                var accY: Float? = 0f,
+                var accZ: Float? = 0f,
+                var gyrX: Float? = 0f,
+                var gyrY: Float? = 0f,
+                var gyrZ: Float? = 0f) : Serializable
