@@ -81,9 +81,9 @@ class ActivityRecordService : Service(), SensorEventListener, ActivityObservable
         return observers
     }
 
-    fun startSensor() = {
-        sm?.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
-        sm?.registerListener(this, gyroscopeSensor, SensorManager.SENSOR_DELAY_NORMAL)
+    fun startSensor(): Boolean {
+        return sm?.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL) ?: false &&
+                sm?.registerListener(this, gyroscopeSensor, SensorManager.SENSOR_DELAY_NORMAL) ?: false
     }
 
     fun stopSensor() = sm?.unregisterListener(this)
