@@ -28,7 +28,7 @@ import io.ridesafe.android.models.SensorData
  * Created by evoxmusic on 04/06/16.
  */
 fun List<SensorData>.mergeToSingleData(): Data {
-    val data = Data(this[0].timestamp)
+    val data = Data(this[0].timestamp, 0f, 0f, 0f, 0f, 0f, 0f)
 
     this.map { v ->
         when (v) {
