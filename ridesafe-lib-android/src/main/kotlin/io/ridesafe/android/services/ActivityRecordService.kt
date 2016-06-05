@@ -61,8 +61,8 @@ class ActivityRecordService : Service(), SensorEventListener, ActivityObservable
 
         // init accelerometer sensor
         sm = getSystemService(SENSOR_SERVICE) as SensorManager
-        accelerometerSensor = sm?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER or Sensor.TYPE_GRAVITY)
-        gyroscopeSensor = sm?.getDefaultSensor(Sensor.TYPE_GYROSCOPE or Sensor.TYPE_GRAVITY)
+        accelerometerSensor = sm?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        gyroscopeSensor = sm?.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
     }
 
     override fun onBind(intent: Intent?): IBinder? {

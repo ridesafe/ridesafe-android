@@ -29,10 +29,11 @@ import java.util.*
 /**
  * Created by evoxmusic on 11/04/16.
  */
-fun SensorEvent.getSensorData(): SensorData {
+fun SensorEvent.getSensorData(): SensorData? {
     return when (sensor.type) {
         Sensor.TYPE_ACCELEROMETER -> return AccelerometerSensorData(Date().getLocalDate().time, values[0], values[1], values[2])
-        else -> return GyroscopeSensorData(Date().getLocalDate().time, values[0], values[1], values[2])
+        Sensor.TYPE_GYROSCOPE -> return GyroscopeSensorData(Date().getLocalDate().time, values[0], values[1], values[2])
+        else -> null
     }
 }
 
