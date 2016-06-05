@@ -146,13 +146,13 @@ class RideSafe(builder: RideSafeBuilderImpl) : RideSafeBuilderImpl by builder, S
             subscriber.onNext(datas)
             subscriber.onCompleted()
 
-        }.subscribeAsyncBackground {
-            getBackend()?.data?.post(it)?.subscribeAsyncBackground({ throwable ->
-                throwable.printStackTrace()
-                sensorDatas?.let { mArraySensorDatas.addAll(it) }
-            }) { result ->
+        }.flatMap {
+            getBackend()?.data?.post(it)
+        }.subscribeAsyncBackground({ throwable ->
+            throwable.printStackTrace()
+            sensorDatas?.let { mArraySensorDatas.addAll(it) }
+        }) { result ->
 
-            }
         }
 
     }
