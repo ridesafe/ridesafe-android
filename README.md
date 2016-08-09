@@ -92,10 +92,11 @@ RideSafe is used into our [Nousmotards](https://play.google.com/store/apps/detai
 
 ## Who are we ?
 RideSafe has been launched by [Nousmotards](https://www.nousmotards.com).
-It is a service platform for bikers, created by [3 engineers and bikers](http://blog.nousmotards.com/2015/04/24/ouverture-du-blog-nousmotards/):
+It is a service platform for bikers, created by [4 engineers and bikers](http://blog.nousmotards.com/2015/04/24/ouverture-du-blog-nousmotards/):
 * [Romaric Philogène](https://fr.linkedin.com/in/romaricphilogene)
 * [Rémi Demol](https://www.linkedin.com/in/demolremi/fr)
 * [Pierre Mavro](https://fr.linkedin.com/in/pmavro/fr)
+* [Ludwine Probst](https://www.linkedin.com/in/ludwineprobst)
 
 We are creating a set of services tailored exclusively to the world of motorcycling!
 Nousmotards app is available on Mobile ([Android](https://play.google.com/store/apps/details?id=com.nousmotards.android), iOS) and on your [browser](https://www.nousmotards.com).
