@@ -13,7 +13,7 @@ Go to:
 * [How to use](#how-to-use)
 * [Contribute](#contribute)
 * [Demo](#demo)
-* [Who are we](#who-are-we)
+* [Who are we](#who-are-we-)
 * [Partners](#partners)
 * [More](#more)
 * [Contact](#contact)
@@ -96,6 +96,7 @@ It is a service platform for bikers, created by [3 engineers and bikers](http://
 * [Romaric Philogène](https://fr.linkedin.com/in/romaricphilogene)
 * [Rémi Demol](https://www.linkedin.com/in/demolremi/fr)
 * [Pierre Mavro](https://fr.linkedin.com/in/pmavro/fr)
+* [Ludwine Probst](https://www.linkedin.com/in/ludwineprobst)
 
 We are creating a set of services tailored exclusively to the world of motorcycling!
 Nousmotards app is available on Mobile ([Android](https://play.google.com/store/apps/details?id=com.nousmotards.android), iOS) and on your [browser](https://www.nousmotards.com).
@@ -107,7 +108,7 @@ Nousmotards app is available on Mobile ([Android](https://play.google.com/store/
 We are looking for worldwide partners specialised in motorbike and/or technology.
 
 ## More
-The "Activity Recognition" project is based on the work of [Ludwine Probst](https://github.com/nivdul) and [Amira Lakhal](https://github.com/MiraLak), which detects one type of activity from the accelerometer integrated in smartphones and a self-learning algorithm called [machine learning](https://en.wikipedia.org/wiki/Machine_learning).
+The "Activity Recognition" project is based on the work of [Ludwine Probst](https://github.com/nivdul), which detects one type of activity from the accelerometer integrated in smartphones and a self-learning algorithm called [machine learning](https://en.wikipedia.org/wiki/Machine_learning).
 
 The data and algorithms are available under the Apache license, this means that the changes and improvements made will be communicated to the community.
 Commercial use is unrestricted.
