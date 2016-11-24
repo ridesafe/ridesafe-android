@@ -62,7 +62,7 @@ artifacts {
 }
 
 buildscript {
-    ext.kotlin_version = '1.0.1-2'
+    ext.kotlin_version = '1.0.5-2'
 
     repositories {
         jcenter()
