@@ -59,10 +59,6 @@ class RideSafeBackend constructor(val context: Context,
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS
 
-        // get device information
-        var mDeviceInfo: DeviceName.DeviceInfo? = null
-        DeviceName.with(context).request { deviceInfo, exception -> mDeviceInfo = deviceInfo }
-
         // get device id
         val deviceId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
 
@@ -75,16 +71,18 @@ class RideSafeBackend constructor(val context: Context,
                     val builder = chain.request().newBuilder().addHeader("Device", "android")
 
                     builder.addHeader("Device-Id", deviceId)
-
-                    mDeviceInfo?.let {
-                        builder.addHeader("Device-Brand", it.manufacturer)
-                        builder.addHeader("Device-Model", it.marketName)
-                        builder.addHeader("Device-Raw-Model", it.model)
-                    }
-
                     authenticationToken?.let { builder.addHeader("Authorization", it) }
 
-                    chain.proceed(builder.build())
+                    // get device information
+                    DeviceName.with(context).request { deviceInfo, exception ->
+                        if (exception == null) {
+                            builder.addHeader("Device-Brand", deviceInfo.manufacturer)
+                            builder.addHeader("Device-Model", deviceInfo.marketName)
+                            builder.addHeader("Device-Raw-Model", deviceInfo.model)
+                        }
+
+                        chain.proceed(builder.build())
+                    }
 
                 }.build()
 
