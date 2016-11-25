@@ -62,19 +62,19 @@ class RideSafeBackend constructor(val context: Context,
         // get device id
         val deviceId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
 
-        val okHttpClient = OkHttpClient.Builder()
-                .readTimeout(timeout, TimeUnit.MILLISECONDS)
-                .writeTimeout(timeout, TimeUnit.MILLISECONDS)
-                .addInterceptor(httpLoggingInterceptor)
-                .addInterceptor { chain ->
+        // get device information
+        DeviceName.with(context).request { deviceInfo, exception ->
+            val okHttpClient = OkHttpClient.Builder()
+                    .readTimeout(timeout, TimeUnit.MILLISECONDS)
+                    .writeTimeout(timeout, TimeUnit.MILLISECONDS)
+                    .addInterceptor(httpLoggingInterceptor)
+                    .addInterceptor { chain ->
 
-                    val builder = chain.request().newBuilder().addHeader("Device", "android")
+                        val builder = chain.request().newBuilder().addHeader("Device", "android")
 
-                    builder.addHeader("Device-Id", deviceId)
-                    authenticationToken?.let { builder.addHeader("Authorization", it) }
+                        builder.addHeader("Device-Id", deviceId)
+                        authenticationToken?.let { builder.addHeader("Authorization", it) }
 
-                    // get device information
-                    DeviceName.with(context).request { deviceInfo, exception ->
                         if (exception == null) {
                             builder.addHeader("Device-Brand", deviceInfo.manufacturer)
                             builder.addHeader("Device-Model", deviceInfo.marketName)
@@ -82,17 +82,17 @@ class RideSafeBackend constructor(val context: Context,
                         }
 
                         chain.proceed(builder.build())
-                    }
 
-                }.build()
+                    }.build()
 
-        ra = Retrofit.Builder()
-                .baseUrl(HttpUrl.parse("$host/api/v1/"))
-                .client(okHttpClient)
-                .addCallAdapterFactory(rxJavaCallAdapterFactory)
-                .addConverterFactory(gsonConverterFactory)
-                .build()
+            ra = Retrofit.Builder()
+                    .baseUrl(HttpUrl.parse("$host/api/v1/"))
+                    .client(okHttpClient)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .addConverterFactory(gsonConverterFactory)
+                    .build()
 
+        }
     }
 
 }
