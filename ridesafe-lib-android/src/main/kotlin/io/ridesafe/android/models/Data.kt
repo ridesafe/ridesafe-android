@@ -30,4 +30,5 @@ data class Data(var timestamp: Long? = 0L,
                 var accZ: Float? = 0f,
                 var gyrX: Float? = 0f,
                 var gyrY: Float? = 0f,
-                var gyrZ: Float? = 0f) : Serializable
+                var gyrZ: Float? = 0f,
+                var key: String? = null) : Serializable

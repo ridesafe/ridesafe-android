@@ -46,6 +46,7 @@ interface RideSafeBuilderImpl : Serializable {
     fun getReadyCallbacks(): MutableList<(rideSafe: RideSafe) -> Unit>?
     fun getObservers(): HashSet<ActivityObserver>?
     fun getPushToBackendBatchSize(): Int
+    fun getDataKey(): String?
 
 }
 
@@ -61,12 +62,14 @@ class RideSafe(builder: RideSafeBuilderImpl) : RideSafeBuilderImpl by builder, S
         private val readyCallbacks: MutableList<(rideSafe: RideSafe) -> Unit> = mutableListOf()
         private val observers: HashSet<ActivityObserver> = hashSetOf()
         private var pushToBackendBatchSize: Int = 3000
+        private var dataKey: String? = null
 
         override fun getContext(): Context? = context
         override fun getBackend(): RideSafeBackend? = backend
         override fun getReadyCallbacks(): MutableList<(rideSafe: RideSafe) -> Unit> = readyCallbacks
         override fun getObservers(): HashSet<ActivityObserver> = observers
         override fun getPushToBackendBatchSize(): Int = pushToBackendBatchSize
+        override fun getDataKey(): String? = dataKey
 
         fun setContext(context: Context): Builder {
             this.context = context
@@ -93,13 +96,18 @@ class RideSafe(builder: RideSafeBuilderImpl) : RideSafeBuilderImpl by builder, S
             return this
         }
 
+        fun setKey(key: String): Builder {
+            dataKey = key
+            return this
+        }
+
         fun build(): RideSafe {
             return RideSafe(this)
         }
     }
 
     private val activityRecordServiceIntent: Intent? by lazy {
-        getContext()?.let { Intent(it.applicationContext, ActivityRecordService::class.java) } ?: null
+        getContext()?.let { Intent(it.applicationContext, ActivityRecordService::class.java) }
     }
 
     private var activityRecordService: ActivityRecordService? = null
@@ -143,6 +151,8 @@ class RideSafe(builder: RideSafeBuilderImpl) : RideSafeBuilderImpl by builder, S
                     ?.groupBy { it.timestamp }
                     ?.map { it.value.mergeToSingleData() }
 
+            datas?.forEach { it.key = getDataKey() }
+
             subscriber.onNext(datas)
             subscriber.onCompleted()
 
@@ -163,9 +173,8 @@ class RideSafe(builder: RideSafeBuilderImpl) : RideSafeBuilderImpl by builder, S
             return
         }
 
-        getContext()?.let {
-            it.applicationContext.bindService(activityRecordServiceIntent, serviceConnectionActivityRecordService, Context.BIND_AUTO_CREATE)
-        }
+        getContext()?.applicationContext?.bindService(activityRecordServiceIntent,
+                serviceConnectionActivityRecordService, Context.BIND_AUTO_CREATE)
     }
 
     private fun doUnbindService() {
@@ -197,12 +206,12 @@ class RideSafe(builder: RideSafeBuilderImpl) : RideSafeBuilderImpl by builder, S
 
     private fun startActivityRecordService() {
         // start ActivityRecordService
-        getContext()?.let { it.applicationContext.startService(activityRecordServiceIntent) }
+        getContext()?.applicationContext?.startService(activityRecordServiceIntent)
     }
 
     private fun stopActivityRecordService() {
         // stop ActivityRecordService
-        getContext()?.let { it.applicationContext.stopService(activityRecordServiceIntent) }
+        getContext()?.applicationContext?.stopService(activityRecordServiceIntent)
     }
 
 
