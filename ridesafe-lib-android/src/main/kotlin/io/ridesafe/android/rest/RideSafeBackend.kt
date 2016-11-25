@@ -23,6 +23,7 @@ import android.content.Context
 import android.provider.Settings
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
+import com.jaredrummler.android.device.DeviceName
 import io.ridesafe.android.rest.models.RestData
 import io.ridesafe.android.rest.models.RestDataForm
 import okhttp3.HttpUrl
@@ -42,7 +43,6 @@ class RideSafeBackend constructor(val context: Context,
                                   val authenticationToken: String? = null,
                                   val timeout: Long = 60 * 1000L) : Serializable {
 
-    private val deviceId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
     private var ra: Retrofit? = null
 
     val data: RestData by lazy { ra?.create(RestData::class.java)!! }
@@ -59,6 +59,13 @@ class RideSafeBackend constructor(val context: Context,
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS
 
+        // get device information
+        var mDeviceInfo: DeviceName.DeviceInfo? = null
+        DeviceName.with(context).request { deviceInfo, exception -> mDeviceInfo = deviceInfo }
+
+        // get device id
+        val deviceId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+
         val okHttpClient = OkHttpClient.Builder()
                 .readTimeout(timeout, TimeUnit.MILLISECONDS)
                 .writeTimeout(timeout, TimeUnit.MILLISECONDS)
@@ -68,6 +75,13 @@ class RideSafeBackend constructor(val context: Context,
                     val builder = chain.request().newBuilder().addHeader("Device", "android")
 
                     builder.addHeader("Device-Id", deviceId)
+
+                    mDeviceInfo?.let {
+                        builder.addHeader("Device-Brand", it.manufacturer)
+                        builder.addHeader("Device-Model", it.marketName)
+                        builder.addHeader("Device-Raw-Model", it.model)
+                    }
+
                     authenticationToken?.let { builder.addHeader("Authorization", it) }
 
                     chain.proceed(builder.build())
@@ -80,7 +94,6 @@ class RideSafeBackend constructor(val context: Context,
                 .addCallAdapterFactory(rxJavaCallAdapterFactory)
                 .addConverterFactory(gsonConverterFactory)
                 .build()
-
 
     }
 
